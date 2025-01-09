@@ -12,9 +12,12 @@ class MenuLinkAdmin(admin.ModelAdmin):
 
 @admin.register(SiteSetup)
 class SiteSetupAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'description', 'show_header', 'show_search', 'show_menu', 'show_description', 'show_pagination', 'show_footer')
-    list_display_links = ('id', 'title')
-    list_filter = ('show_header', 'show_search', 'show_menu', 'show_description', 'show_pagination', 'show_footer')
-    search_fields = ('title', 'description')
-    ordering = ('id',)
+    list_display = ('title', 'description',)
+    
+    
+    # Se o usuário já tiver criado um setup não poderá alterá-lo
+    def has_add_permission(self, request):
+        if SiteSetup.objects.all().exists():        
+            return True
+        return False
     

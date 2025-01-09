@@ -20,7 +20,7 @@ class SiteSetup(models.Model):
 
     class Meta:
         verbose_name = 'Setup'
-        verbose_name_plural = 'Setups'
+        verbose_name_plural = 'Setup'
 
     title = models.CharField(max_length=65)
     description = models.TextField(max_length=255)
