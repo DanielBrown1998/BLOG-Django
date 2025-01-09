@@ -1,0 +1,1 @@
+Blog criado a partir dos Estudos de Django
