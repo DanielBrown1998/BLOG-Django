@@ -10,14 +10,20 @@ class MenuLinkAdmin(admin.ModelAdmin):
     search_fields = ('text', 'url_or_path')
     ordering = ('id',)
 
+class MenuLinkInline(admin.TabularInline):
+    model = MenuLink
+    extra = 1
+
+
 @admin.register(SiteSetup)
 class SiteSetupAdmin(admin.ModelAdmin):
     list_display = ('title', 'description',)
+    inlines = MenuLinkInline,
     
     
     # Se o usuário já tiver criado um setup não poderá alterá-lo
     def has_add_permission(self, request):
-        if SiteSetup.objects.all().exists():        
+        if not SiteSetup.objects.all().exists():        
             return True
         return False
     
