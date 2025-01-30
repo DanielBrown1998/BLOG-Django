@@ -22,7 +22,7 @@ class MenuLink(models.Model):
     )
 
     def __str__(self):
-        return self.title
+        return self.text
     
 
 class SiteSetup(models.Model):
