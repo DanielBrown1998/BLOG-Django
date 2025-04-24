@@ -1,6 +1,8 @@
 from django.db import models
 from utils import rands
 from django.contrib.auth.models import User
+
+from utils.images import resize_image
 # Create your models here.
 class Tag(models.Model):
     class Meta:
@@ -158,5 +160,12 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = rands.new_slugfy(self.title)
-        return super().save(*args, **kwargs)
-
+        current_name = self.cover.name # antes de ser salvo na base de dados
+        save_super = super().save(*args, **kwargs) # salvando na base de dados
+        # depois de ser salvo na base de dados
+        name_changed = False
+        if self.cover:
+            name_changed = current_name != self.cover.name
+        if name_changed:
+            resize_image(self.cover, 900)
+        return save_super

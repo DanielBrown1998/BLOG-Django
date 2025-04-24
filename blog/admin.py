@@ -55,3 +55,10 @@ class PostAdmin(admin.ModelAdmin):
         "slug": ('title',),
     }
 
+    def save_model(self, request, obj, form, change):
+        if change:
+            obj.updated_by = request.user
+        else:
+            obj.created_by = request.user
+        obj.save()
+    
